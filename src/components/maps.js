@@ -17,14 +17,19 @@ const center={
     lng: -74.0060152
 }
 
-export const Maps = ({update, getState, markersProps}) => {
 
+export const Maps = ({update, getState, markersProps}) => {
     const {isLoaded, loadError} = useLoadScript({
-        googleMapsApiKey: 'AIzaSyDohG1kfHLVrzliksUrPh1Q0V7WBJMajT8',
+        googleMapsApiKey: 'AIzaSyCPWY7uVJEdJ1CyfzrEbDxgEKBOtwi1_V0',
         libraries
     })
 
     const [markers, setMarkers] = useState([])
+    const [origin, setOrigin] = useState(null);
+    const [destination, setDestination] = useState(null);
+    const [waypts, setWaypts] = useState([])
+
+
 
     useEffect(() => {
         if (getState === false) {return}
@@ -36,19 +41,43 @@ export const Maps = ({update, getState, markersProps}) => {
         setMarkers(markersProps)
     }, [markersProps])
 
-    // const [response, setResponse] = React.useState(null);
+    useEffect(() => {
+            setOrigin(markers[0])
+            if (markers.length === 2) {
+                setDestination(markers[markers.length - 1])
+                count.current = 0
+            } else if (markers.length > 2) {
+                markers.map((item, index) => {
+                    if (index !== 0 && index !== markers.length - 1) {
+                        setWaypts([...waypts, {location: item, stopover: true}])
+                    }
+                })
+                setDestination(markers[markers.length - 1])
+                count.current = 0
 
-    // const directionsCallback = (response) => {
-    //     console.log(response);
+            }
+        count.current = 0
+    }, [markers])
+
+    const [response, setResponse] = React.useState(null);
+    let count = React.useRef(0);
+
+    const directionsCallback = res => {
+        if (res !== null && count.current < 1) {
+            if (res.status === 'OK') {
+                count.current += 1;
+                setResponse(res);
+            } else  {
+                count.current = 0;
+                console.log('res: ', res);
+        }
+        }
+
+    };
+
+    // useEffect(() => {
     //
-    //     if (response !== null) {
-    //         if (response.status === "OK") {
-    //             setResponse(response);
-    //         } else {
-    //             console.log("response: ", response);
-    //         }
-    //     }
-    // };
+    // }, [response])
 
     // const DirectionsServiceOption = {
     //     origin: '190 Main Street, Ottawa, Canada',
@@ -71,18 +100,40 @@ export const Maps = ({update, getState, markersProps}) => {
                 {
                     lat: event.latLng.lat(),
                     lng: event.latLng.lng(),
-                    time: new Date()
+                    //time: new Date()
                 }
                 ]
             )
         } : null}
         >
-            {markers.map((marker, index, markers) => {
-               return <Marker
-                key={marker.time.toISOString()}
-                position={{lat: marker.lat, lng: marker.lng}}
-            >
-            </Marker>})}
+            {/*{markers.map((marker, index, markers) => {*/}
+            {/*   return <Marker*/}
+            {/*    key={marker.time.toISOString()}*/}
+            {/*    position={{lat: marker.lat, lng: marker.lng}}*/}
+            {/*>*/}
+            {/*</Marker>})}*/}
+            {response !== null && (
+                <DirectionsRenderer
+                    // required
+                    options={{
+                        directions: response
+                    }}
+                />
+            )}
+            {/*{console.log(waypts, 'waypts')}*/}
+            {/*{console.log(destination, 'destination')}*/}
+            {/*{console.log(origin, 'origin')}*/}
+
+            {destination && origin ?
+                <DirectionsService
+                options={{
+                    destination: destination,
+                    origin: origin,
+                    waypoints: waypts,
+                    travelMode: 'WALKING'
+                }}
+                callback={directionsCallback}
+            /> : null}
             <Polyline
                 path={markers}
                 geodesic={true}

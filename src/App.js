@@ -2,6 +2,8 @@ import './App.css';
 import RouteList from "./components/routeList";
 import React, {useState} from "react";
 import {NewRouteModal} from "./components/modalWindow";
+// import    ExampleDirections from './components/maps'
+
 
 const REACT_API_KEY = 'AIzaSyDohG1kfHLVrzliksUrPh1Q0V7WBJMajT8'
 
@@ -16,6 +18,7 @@ function App() {
             </div>
             <div className="row justify-content-center h-75">
                 <RouteList/>
+                {/*<ExampleDirections/>*/}
             </div>
         </div>
     );
