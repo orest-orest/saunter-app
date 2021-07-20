@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from "react";
-// import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import {
     useLoadScript,
     GoogleMap,
-    Marker,
-    InfoWindow, Polyline, DirectionsRenderer, DirectionsService
+    Marker, Polyline,
 } from '@react-google-maps/api'
-// import { compose, withProps } from "recompose"
 
 const libraries = ["places", "directions"]
 const mapContainerStyle = {
@@ -71,9 +68,6 @@ export const Maps = ({update, getState, markersProps}) => {
     const onMarkerDragEnd = (e, index) => {
        const lat = e.latLng.lat();
        const lng = e.latLng.lng();
-        // const { latLng } = coord;
-        // const lat = latLng.lat();
-        // const lng = latLng.lng();
 
         let copiedArray = [...markers]
         copiedArray[index] = {lat: lat, lng: lng, time: markers[index].time}

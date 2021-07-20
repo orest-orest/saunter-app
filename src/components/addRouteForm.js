@@ -1,9 +1,8 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect,  useState} from "react";
 import Form from 'react-bootstrap/Form';
 import {addNewRoute} from "../redux/actions/routeActions";
 import {connect} from "react-redux";
 import {Maps} from "./maps";
-import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button"
 
 const AddRouteForm = ({addNewRoute, setShow}) => {
@@ -48,23 +47,7 @@ const AddRouteForm = ({addNewRoute, setShow}) => {
     const updateFromMap = (data) => {
         setMapDate(data)
     }
-    // useEffect(() => {
-    //         // if (getState === false) {return}
-    //         // const favorite = false
-    //         const id = new Date().valueOf();
-    //         updateToUpperComponent(title, shortDescription, description, favorite, id)
-    //     },
-    //     [])
 
-    // const handleAddPath = () => {
-    //     dispatch(addNewRoute({
-    //         title: title,
-    //         shortDescription: shortDescription,
-    //         description: description,
-    //     }))
-    //     handleClose()
-    // }
-    //
 
     return (
         <>
@@ -117,11 +100,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(null, mapDispatchToProps)(AddRouteForm)
-
-// const mapStateToProps = {}
-//
-// const mapDispatchToProps = {
-//     addNewRoute
-// }
-//
-// export default connect(null, mapDispatchToProps)(AddRoute)

@@ -1,52 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import {connect, useDispatch} from 'react-redux'
-// import {addNewRoute} from "../redux/actions/routeActions";
-import {Maps} from "./maps";
+
 import AddRouteForm from "./addRouteForm";
 
 
 export const NewRouteModal = () => {
 
-    // const [formData, setFormData] = useState(false)
-    // const [mapData, setMapData] = useState(false)
     const [show, setShow] = useState(false)
-    // const [getState, setGetState] = useState(false)
 
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true);
-
-    // const updateFromForm = (title, shortDescription, description, favorite, id) => {
-    //     setFormData({
-    //         title: title,
-    //         shortDescription: shortDescription,
-    //         description: description,
-    //         favorite: favorite,
-    //         id: id
-    //     })
-    // }
-
-    // const updateFromMap = (markers) => {
-    //     setMapData(markers)
-    // }
-
-    // useEffect(() => {
-    //     if (!formData || !mapData) {return}
-    //     addNewRoute(
-    //         {
-    //             title: formData.title,
-    //             shortDescription: formData.shortDescription,
-    //             description: formData.description,
-    //             favorite: formData.favorite,
-    //             id: formData.id,
-    //             markers: mapData,
-    //         })
-    //     setGetState(false)
-    //     handleClose()
-    // },[mapData])
-
 
     return (
         <>
@@ -72,10 +37,3 @@ export const NewRouteModal = () => {
         </>
     )
 }
-
-
-// const mapDispatchToProps =  {
-//     addNewRoute
-// }
-//
-// export default connect(null, mapDispatchToProps)(NewRouteModal)
