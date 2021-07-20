@@ -90,6 +90,9 @@ const RouteList = ({list}) => {
                         <h3>
                             Description
                         </h3>
+                        <h3>
+                            {currentPath.title}
+                        </h3>
                         <p>{currentPath.description}</p>
                         <Maps update={false} getState={false} markersProps={currentPath.markers}/>
                     </>
